@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="ASBDemo.Views.Entry.Register.NetcodeValidate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ASBDemo.Views.Entry.Register"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            MaxWidth="500"
+            Margin="10">
+            <TextBlock Text="Enter NetCode" FontSize="28" />
+            <TextBlock Text="We are about to text a Netcode to your existing Netcode mobile number. We need this to verify your identity."
+                   TextWrapping="Wrap" />
+            <Button x:Name="NetCodeSend"
+                    Content="Send NetCode"
+                    Margin="0,5,0,0"
+                    Click="NetCodeSend_Click" />
+            <HyperlinkButton
+                        Content="I didn't recieve a NetCode"
+                         Visibility="{x:Bind Viewmodel.SentNetcode, Mode=OneWay}" />
+            <TextBox x:Name="NetCode"
+                 Header="NetCode"
+                 PlaceholderText="Enter NetCode"
+                 TextChanged="NetCodeChanged"
+                 MaxLength="8"
+                 Visibility="{x:Bind Viewmodel.SentNetcode, Mode=OneWay}" />
+            <HyperlinkButton Content="Do this later"
+                         Click="Later_Click" />
+            <Button Content="Continue"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0"
+                    IsEnabled="{x:Bind Viewmodel.IsNetCodeEntered, Mode=OneWay}"
+                    Click="Continue_Click" />
+        </StackPanel>
+    </Grid>
+</Page>

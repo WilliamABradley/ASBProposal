@@ -1,0 +1,106 @@
+﻿<Page
+    x:Class="ASBDemo.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ASBDemo"
+    xmlns:controls="using:ASBDemo.Controls"
+    xmlns:triggers="using:ASBDemo.Common.Triggers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DeviceInput">
+                <VisualState x:Name="DesktopMode">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceInputRelatedTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ShellCommands.(FrameworkElement.Margin)" Value="0,-48,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="SizeStates">
+                <VisualState x:Name="DefaultView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+                <VisualState x:Name="SmallView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger x:Name="SmallTrigger" MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ShellCommands.RequestShowItems" Value="False" />
+                        <Setter Target="MobileShellCommands.RequestShowItems" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--#region MainBar-->
+        <controls:TopBar x:Name="Titlebar" />
+        <!--#endregion-->
+
+        <Grid Grid.Row="1">
+            <SplitView x:Name="MainPane"
+                        IsPaneOpen="{x:Bind Titlebar.IsToggleActive, Mode=TwoWay}"
+                        Grid.Row="1"
+                        DisplayMode="CompactOverlay"
+                       OpenPaneLength="300">
+
+                <SplitView.Pane>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel x:Name="TopPanel">
+                            <controls:ShellButton x:Name="Login"
+                                                  Text="Login"
+                                                  BeginButton="True"
+                                                  Glyph="&#xE192;"
+                                                  Click="MenuItem_Clicked" />
+                            <controls:ShellButton x:Name="FindUs"
+                                                  Text="Find Us"
+                                                  Glyph="&#xE707;"
+                                                  Click="MenuItem_Clicked" />
+                        </StackPanel>
+                        <StackPanel x:Name="BottomPanel"
+                                    Grid.Row="1">
+                            <controls:ShellButton x:Name="settingsButton"
+                                                  Text="Settings"
+                                                  Glyph=""
+                                                  Click="MenuItem_Clicked"
+                                                  Visibility="{x:Bind Session.IsDeviceLoggedIn, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
+                </SplitView.Pane>
+
+                <SplitView.Content>
+                    <Grid x:Name="ContentGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <controls:BindableCommandBar x:Name="ShellCommands" Background="Transparent" RequestedTheme="Dark" Margin="0,-48,0,0" Grid.RowSpan="2" DefaultLabelPosition="Right" />
+
+                        <Frame x:Name="MainFrame" Grid.Row="1" Navigating="MainFrame_Navigating"  IsTabStop="False" />
+
+                        <controls:BindableCommandBar x:Name="MobileShellCommands" Grid.Row="2" RequestShowItems="False" OverflowButtonVisibility="Visible" />
+                    </Grid>
+                </SplitView.Content>
+            </SplitView>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="ASBDemo.Views.Entry.WelcomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ASBDemo.Views.Entry"
+    xmlns:controls="using:ASBDemo.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Sizes">
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="ThinView">
+                    <VisualState.Setters>
+                        <Setter Target="GuidancePanel.(RelativePanel.RightOf)" Value="" />
+                        <Setter Target="GuidancePanel.(RelativePanel.Below)" Value="MainPanel" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <RelativePanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel x:Name="MainPanel" Margin="10">
+                <TextBlock Text="Welcome to ASB Mobile" FontSize="28" />
+                <TextBox
+                    Header="Username"
+                    PlaceholderText="Enter Username"
+                    Text="{x:Bind Viewmodel.Username, Mode=TwoWay}" />
+                <PasswordBox
+                    Header="Password"
+                    PlaceholderText="Enter Password"
+                    Password="{x:Bind Viewmodel.Password, Mode=TwoWay}" />
+                <TextBlock
+                    Text="Use the same details you use to log in to Internet Banking." />
+                <Button x:Name="RegisterButton"
+                        Content="Register Device"
+                        Click="{x:Bind Viewmodel.AttemptRegistration}"
+                        Margin="0,10,0,0" />
+            </StackPanel>
+            <StackPanel x:Name="GuidancePanel"
+                        RelativePanel.RightOf="MainPanel"
+                        Margin="10"
+                        MaxWidth="300">
+                <TextBlock
+                    Text="Need Help?"
+                    Style="{StaticResource SpecialDetail}" />
+                <TextBlock
+                    Text="Call our 24-7 help line:" />
+                <HyperlinkButton
+                    Content="0800 662 226" />
+
+                <TextBlock
+                    Text="Not an ASB customer?"
+                    Style="{StaticResource SpecialDetail}" />
+                <TextBlock
+                    Text="ASB Mobile allows you to send payments via mobile number and email!"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton
+                    Content="Join ASB" />
+
+                <TextBlock
+                    Text="Need to collect a payment?"
+                    Style="{StaticResource SpecialDetail}" />
+                <HyperlinkButton
+                    Content="Collect a Payment" />
+            </StackPanel>
+        </RelativePanel>
+    </Grid>
+</Page>

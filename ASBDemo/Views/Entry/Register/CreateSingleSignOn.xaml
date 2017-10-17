@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="ASBDemo.Views.Entry.Register.CreateSingleSignOn"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ASBDemo.Views.Entry.Register"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            MaxWidth="500"
+            Margin="10">
+            <TextBlock Text="Log In Securely" FontSize="28" />
+            <TextBlock TextWrapping="Wrap">
+                You can choose to access the app using <Run FontWeight="Bold" Foreground="{StaticResource ASBYellow}">Windows Hello</Run>, or by setting up a new <Run FontWeight="Bold" Foreground="{StaticResource ASBYellow}">PIN</Run>.
+            </TextBlock>
+
+            <Button Content="Setup Windows Hello" Click="Hello_Click" />
+
+            <TextBlock
+                TextWrapping="Wrap">
+                <Run FontWeight="Bold" Foreground="{StaticResource ASBYellow}">Important:</Run> Replacing the PIN will apply to any other devices you have enabled for ASB Mobile PIN Log In. If you prefer password Log In, Skip this step.
+            </TextBlock>
+            <HyperlinkButton Content="Skip this Step" Click="Skip_Click" />
+        </StackPanel>
+    </Grid>
+</Page>
